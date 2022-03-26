@@ -11,24 +11,26 @@ var _kafka = new Kafka({
 });
 
 var consumer = _kafka.consumer({groupId: 'test-consumer-group'});
-
 var run = async () => {
   await consumer.connect();
-  await consumer.subscribe(['nibss.gateway.make.payment']);
+  await consumer.subscribe({topic:'nibss.gateway.make.payment'});
   await consumer.run({
-    eachMessage: async ([topic, partition, message]) => {
+    eachMessage: async ({topic, partition, message}) => {
       const prefix = `${new Date()} - ${topic}[${partition} | ${message}] / ${message.timestamp}`;
       const ddata = `- ${prefix} ${message.key}#${message.value}\n`;
       // fs.writeFile('testdata.txt', ddata, { flag: 'a+' }, err => {});
-      console.log(ddata);
+      console.log(ddata, "\n\n");
     },
   });
 }
 
+// setInterval(() => {
+// }, 3000);
+
 run().catch(e => {
   const errdata = `${new Date()} - [testapp] ${e.message}\n`;
   //fs.writeFile('errdata.txt', errdata, { flag: 'a+' }, err => {});
-  console.log(errdata);
+  console.log(errdata, "\n\n");
 });
 
 /*
