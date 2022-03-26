@@ -19,17 +19,14 @@ var run = async () => {
     eachMessage: async ([topic, partition, message]) => {
       const prefix = `${new Date()} - ${topic}[${partition} | ${message}] / ${message.timestamp}`;
       const ddata = `- ${prefix} ${message.key}#${message.value}\n`;
-      // console.log(`- ${prefix} ${message.key}#${message.value}`);
       fs.writeFile('testdata.txt', ddata, { flag: 'a+' }, err => {});
     },
   });
 }
 
 run().catch(e => {
-  // console.error(`[testapp] ${e.message}`, e)
   const errdata = `${new Date()} - [testapp] ${e.message}\n`;
   fs.writeFile('errdata.txt', errdata, { flag: 'a+' }, err => {});
-
 });
 
 /*
