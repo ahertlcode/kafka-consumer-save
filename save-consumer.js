@@ -6,7 +6,7 @@ var baseurl = "http://localhost:3000/";
 
 var _kafka = new Kafka({
   clientId: 'testapp',
-  brokers: ['kafka2:9092'],
+  brokers: ['kafka:9092'],
   logLevel: logLevel.INFO
 });
 
